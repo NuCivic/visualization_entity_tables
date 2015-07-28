@@ -1,0 +1,47 @@
+<?php
+/**
+ * @file
+ * Code for the Visualization Entity Tables feature.
+ */
+
+include_once 'visualization_entity_tables.features.inc';
+
+/**
+ * Attach needed libraries to an element.
+ */
+function visualization_entity_tables_attach_libraries(&$element) {
+  $libraries = array(
+    'lodash',
+    'backbone',
+    'recline',
+    'gdocs',
+    'csv',
+    'mustache',
+    'slickgrid',
+  );
+
+  foreach ($libraries as $library) {
+    $element['#attached']['libraries_load'][] = array($library);
+  }
+
+  $module_path = drupal_get_path('module', 'visualization_entity_tables');
+  $element['#attached']['css'][] = $module_path . '/css/ve_tables.css';
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function visualization_entity_tables_entity_view($entity, $type, $view_mode, $langcode) {
+  if ($type == 'visualization' && $entity->type == 've_table') {
+    $entity->content['#suffix'] = '<div id="ve-table"></div>';
+    visualization_entity_tables_attach_libraries($entity->content);
+
+    if (isset($entity->field_ve_table_uuid_resource)) {
+      global $base_path;
+      $resource = $base_path . 'node/' . $entity->field_ve_table_uuid_resource[LANGUAGE_NONE][0]['target_uuid'] . '/download';
+    }
+
+    drupal_add_js(array('visualizationEntityTables' => array('resource' => $resource)), 'setting');
+    drupal_add_js(drupal_get_path('module', 'visualization_entity_tables') . '/js/visualization_entity_tables_view.js', array('weight' => 101));
+  }
+}
