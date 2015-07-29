@@ -27,3 +27,7 @@ html body.admin-menu {
 .region-content {
   margin: 0 !important;
 }
+
+.field-name-field-ve-settings{
+  display: none;
+}
