@@ -1,3 +1,20 @@
 #ve-table {
   height: 600px;
 }
+
+#iframe-shell #ve-table {
+  height: 100%;
+}
+
+#iframe-shell {
+  overflow: hidden;
+  height: 100%;
+}
+
+#iframe-shell h2 {
+  display: none;
+}
+
+body, html {
+  height: 100% !important;
+}
