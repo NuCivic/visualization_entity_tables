@@ -13,6 +13,12 @@
       var grid = new recline.View.SlickGrid({
         model: dataset,
         el: $('#ve-table'),
+        state: {
+          gridOptions: {
+            autoHeight: true,
+          }
+        }
+
       });
 
       grid.visible = true;

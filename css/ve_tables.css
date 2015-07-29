@@ -1,5 +1,5 @@
 #ve-table {
-  height: 600px;
+  height: 100%;
 }
 
 #iframe-shell #ve-table {
@@ -7,7 +7,7 @@
 }
 
 #iframe-shell {
-  overflow: hidden;
+  overflow: auto;
   height: 100%;
 }
 
@@ -17,4 +17,13 @@
 
 body, html {
   height: 100% !important;
+  padding-top: 0px;
+}
+
+html body.admin-menu {
+  margin-top: 0px  !important;
+}
+
+.region-content {
+  margin: 0 !important;
 }
