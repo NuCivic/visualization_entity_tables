@@ -36,10 +36,10 @@ html body.admin-menu {
   margin-top: 0px  !important;
 }
 
-#iframe-shell .region-content {
+.region-content {
   margin: 0 !important;
 }
 
-#iframe-shell .field-name-field-ve-settings{
+.field-name-field-ve-settings{
   display: none;
 }
