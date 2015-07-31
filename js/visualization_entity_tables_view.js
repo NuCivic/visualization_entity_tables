@@ -16,6 +16,7 @@
         state: {
           gridOptions: {
             autoHeight: true,
+            forceFitColumns: true
           }
         }
 

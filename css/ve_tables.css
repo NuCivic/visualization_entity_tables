@@ -12,7 +12,7 @@
 }
 
 #iframe-shell h2 {
-  display: none;
+  font-size: 20px;
 }
 
 body, html {
@@ -24,10 +24,10 @@ html body.admin-menu {
   margin-top: 0px  !important;
 }
 
-.region-content {
+#iframe-shell .region-content {
   margin: 0 !important;
 }
 
-.field-name-field-ve-settings{
+#iframe-shell .field-name-field-ve-settings{
   display: none;
 }
