@@ -1,6 +1,9 @@
 (function($) {
   Drupal.behaviors.VisualizationEntityTablesView = {
     attach: function(context) {
+
+      $('#iframe-shell h2 a').attr('href', '#');
+
       var source = {
         url: Drupal.settings.visualizationEntityTables.resource,
         backend: 'csv',

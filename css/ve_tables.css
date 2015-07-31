@@ -15,6 +15,10 @@
   font-size: 20px;
 }
 
+#iframe-shell a {
+    pointer-events:none;
+}
+
 #iframe-shell a:hover,
 #iframe-shell a:visited,
 #iframe-shell a:link,
