@@ -2,6 +2,98 @@
   Drupal.behaviors.VisualizationEntityTablesView = {
     attach: function(context) {
 
+      var $container = $('#ve-table');
+
+      // Column resizing based on content width
+      // Based on https://github.com/naresh-n/slickgrid-column-data-autosize
+      function resizeAllColumns(grid) {
+        var elHeaders = $container.find(".slick-header-column");
+        var allColumns = grid.getColumns();
+        elHeaders.each(function(index, el) {
+          var columnDef = $(el).data('column');
+          var headerWidth = getElementWidth(el) + 9; // Needed extra right padding
+          var colIndex = grid.getColumnIndex(columnDef.id);
+          var column = allColumns[colIndex];
+          var autoSizeWidth = Math.max(headerWidth, getMaxColumnTextWidth(grid, columnDef, colIndex));
+          allColumns[colIndex].width = autoSizeWidth;
+        });
+        grid.setColumns(allColumns);
+        grid.onColumnsResized.notify({grid: grid});
+
+      }
+
+      function getMaxColumnTextWidth(grid, columnDef, colIndex) {
+        var texts = [];
+        var rowEl = createRow(columnDef);
+        var data = grid.getData();
+        for (var i = 0; i < data.getLength(); i++) {
+          texts.push(data.getItem(i)[columnDef.field]);
+        }
+        var template = getMaxTextTemplate(texts, columnDef, colIndex, data, rowEl);
+        var width = getTemplateWidth(rowEl, template);
+        deleteRow(rowEl);
+        return width;
+      }
+
+      function getTemplateWidth(rowEl, template) {
+        var cell = $(rowEl.find(".slick-cell"));
+        cell.append(template);
+        $(cell).find("*").css("position", "relative");
+        return cell.outerWidth() + 1;
+      }
+
+      function getMaxTextTemplate(texts, columnDef, colIndex, data, rowEl) {
+        var max = 0,
+        maxTemplate = null;
+        var formatFun = columnDef.formatter;
+        $(texts).each(function(index, text) {
+          var template;
+          if (formatFun) {
+            template = $("<span>" + formatFun(index, colIndex, text, columnDef, data) + "</span>");
+            text = template.text() || text;
+          }
+          var length = text ? getElementWidthUsingCanvas(rowEl, text) : 0;
+          if (length > max) {
+            max = length;
+            maxTemplate = template || text;
+          }
+        });
+        return maxTemplate;
+      }
+
+      function createRow(columnDef) {
+        var rowEl = $('<div class="slick-row"><div class="slick-cell"></div></div>');
+        rowEl.find(".slick-cell").css({
+          "visibility": "hidden",
+          "text-overflow": "initial",
+          "white-space": "nowrap"
+        });
+        var gridCanvas = $container.find(".grid-canvas");
+        $(gridCanvas).append(rowEl);
+        return rowEl;
+      }
+
+      function deleteRow(rowEl) {
+        $(rowEl).remove();
+      }
+
+      function getElementWidth(element) {
+        var width, clone = element.cloneNode(true);
+        clone.style.cssText = 'position: absolute; visibility: hidden;right: auto;text-overflow: initial;white-space: nowrap;';
+        element.parentNode.insertBefore(clone, element);
+        width = clone.offsetWidth;
+        clone.parentNode.removeChild(clone);
+        return width;
+      }
+
+      function getElementWidthUsingCanvas(element, text) {
+        var context = document.createElement("canvas").getContext("2d");
+        context.font = element.css("font-size") + " " + element.css("font-family");
+        var metrics = context.measureText(text);
+        return metrics.width;
+      }
+      // End of Column resizing code
+
       $('#iframe-shell h2 a').attr('href', '#');
 
       var source = {
@@ -10,23 +102,25 @@
       }
       dataset = new recline.Model.Dataset(source);
       dataset.fetch().done(function() {
-        console.log(dataset);
-      });
 
-      var grid = new recline.View.SlickGrid({
-        model: dataset,
-        el: $('#ve-table'),
-        state: {
-          gridOptions: {
-            autoHeight: true,
-            forceFitColumns: true
+        var grid = new recline.View.SlickGrid({
+          model: dataset,
+          el: $container,
+          state: {
+            gridOptions: {
+              autoHeight: true,
+            }
           }
-        }
+
+        });
+
+        grid.visible = true;
+        grid.render();
+
+        // Resize columns to fit content
+        resizeAllColumns(grid.grid);
 
       });
-
-      grid.visible = true;
-      grid.render();
     }
   };
 })(jQuery);
