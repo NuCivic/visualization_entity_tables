@@ -4,12 +4,13 @@
       var title;
       var $body;
 
-      //$('#iframe-shell h2 a').attr('href', '#');
-      if (Drupal.settings.visualizationEntityTables.showTitle && $('#iframe-shell').length) { 
+      if ($('#iframe-shell').length) { 
         $body = $(document.body);
         $body.removeClass('admin-menu');
-        title = $('#iframe-shell').find('h2 a').html();
-        $body.prepend('<h2 class="veTitle">' + title + '</h2>');
+        if (Drupal.settings.visualizationEntityTables.showTitle) {
+          title = $('#iframe-shell').find('h2 a').html();
+          $body.prepend('<h2 class="veTitle">' + title + '</h2>');
+        }
       }
 
       var source = {
