@@ -1,3 +1,7 @@
+.entity-visualization h1 {
+  display: none;
+}
+
 #ve-table {
   height: 100%;
 }
