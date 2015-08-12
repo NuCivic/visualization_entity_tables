@@ -1,8 +1,16 @@
 (function($) {
   Drupal.behaviors.VisualizationEntityTablesView = {
     attach: function(context) {
+      var title;
+      var $body;
 
-      $('#iframe-shell h2 a').attr('href', '#');
+      //$('#iframe-shell h2 a').attr('href', '#');
+      if (Drupal.settings.visualizationEntityTables.showTitle && $('#iframe-shell').length) { 
+        $body = $(document.body);
+        $body.removeClass('admin-menu');
+        title = $('#iframe-shell').find('h2 a').html();
+        $body.prepend('<h2 class="veTitle">' + title + '</h2>');
+      }
 
       var source = {
         url: Drupal.settings.visualizationEntityTables.resource,

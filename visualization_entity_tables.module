@@ -53,8 +53,13 @@ function visualization_entity_tables_entity_view($entity, $type, $view_mode, $la
     $wrapper = entity_metadata_wrapper('visualization', $entity);
     $resource = json_decode($wrapper->field_ve_settings->value());
     $resource = $resource->source;
+    // Get value of Show title field.
+    $title_wrapper = entity_metadata_wrapper('visualization', $entity);
+    $showTitle = $title_wrapper->field_show_title->raw();
+    $showTitle = $showTitle[0];
 
     drupal_add_js(array('visualizationEntityTables' => array('resource' => $resource)), 'setting');
+    drupal_add_js(array('visualizationEntityTables' => array('showTitle'=> $showTitle)), 'setting');
     drupal_add_js(drupal_get_path('module', 'visualization_entity_tables') . '/js/visualization_entity_tables_view.js', array('weight' => 101));
   }
 }
