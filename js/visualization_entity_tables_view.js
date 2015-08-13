@@ -109,16 +109,18 @@
           state: {
             gridOptions: {
               autoHeight: true,
+              forceFitColumns: !Drupal.settings.visualizationEntityTables.resize,
             }
           }
-
         });
 
         grid.visible = true;
         grid.render();
 
         // Resize columns to fit content
-        resizeAllColumns(grid.grid);
+        if (Drupal.settings.visualizationEntityTables.resize) {
+          resizeAllColumns(grid.grid);
+        }
 
       });
     }
