@@ -12,7 +12,7 @@
     $resourceField.on('autocompleteSelect', function(event, node) {
       var re = /\[(.*?)\]/;
       var uuid = re.exec($resourceField.val())[1];
-      settings.source = '/oklahoma/node/' + uuid + '/download';
+      settings.source = '/node/' + uuid + '/download';
       $settingsField.val(JSON.stringify(settings));
     });
 
