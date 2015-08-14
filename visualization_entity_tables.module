@@ -51,10 +51,9 @@ function visualization_entity_tables_entity_view($entity, $type, $view_mode, $la
     $entity->content['#suffix'] = '<div id="ve-table"></div>';
     visualization_entity_tables_attach_libraries($entity->content);
     $wrapper = entity_metadata_wrapper('visualization', $entity);
-    $resource = json_decode($wrapper->field_ve_settings->value());
-    $resource = $resource->source;
+    $settings = json_decode($wrapper->field_ve_settings->value());
 
-    drupal_add_js(array('visualizationEntityTables' => array('resource' => $resource)), 'setting');
+    drupal_add_js(array('visualizationEntityTables' => array('resource' => $settings->source, 'resize' => $settings->resize)), 'setting');
     drupal_add_js(drupal_get_path('module', 'visualization_entity_tables') . '/js/visualization_entity_tables_view.js', array('weight' => 101));
   }
 }

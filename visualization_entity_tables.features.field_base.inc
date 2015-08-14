@@ -10,61 +10,29 @@
 function visualization_entity_tables_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_ve_table_description'
-  $field_bases['field_ve_table_description'] = array(
+  // Exported field_base: 'field_ve_table_resize'
+  $field_bases['field_ve_table_resize'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_ve_table_description',
+    'field_name' => 'field_ve_table_resize',
     'indexes' => array(
-      'format' => array(
-        0 => 'format',
+      'value' => array(
+        0 => 'value',
       ),
     ),
     'locked' => 0,
-    'module' => 'text',
-    'settings' => array(),
-    'translatable' => 0,
-    'type' => 'text_long',
-  );
-
-  // Exported field_base: 'field_ve_table_uuid_resource'
-  $field_bases['field_ve_table_uuid_resource'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_ve_table_uuid_resource',
-    'indexes' => array(
-      'target_entity' => array(
-        0 => 'target_type',
-        1 => 'target_uuid',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'uuidreference',
+    'module' => 'list',
     'settings' => array(
-      'target_bundles' => array(
-        'data_dashboard' => 0,
-        'dataset' => 0,
-        'dkan_data_story' => 0,
-        'group' => 0,
-        'page' => 0,
-        'resource' => 'resource',
+      'allowed_values' => array(
+        0 => '',
+        1 => '',
       ),
-      'target_type' => 'node',
-    ),
-    'target_bundles' => array(
-      'data_dashboard' => 0,
-      'dataset' => 0,
-      'dkan_data_story' => 0,
-      'group' => 0,
-      'page' => 0,
-      'resource' => 'resource',
+      'allowed_values_function' => '',
     ),
     'translatable' => 0,
-    'type' => 'uuidreference',
+    'type' => 'list_boolean',
   );
 
   return $field_bases;
