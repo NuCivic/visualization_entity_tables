@@ -56,7 +56,12 @@ function visualization_entity_tables_entity_view($entity, $type, $view_mode, $la
     // Get value of Show title field.
     $title_wrapper = entity_metadata_wrapper('visualization', $entity);
     $showTitle = $title_wrapper->field_show_title->raw();
-    $showTitle = $showTitle[0];
+    if($showTitle) {
+      $showTitle = $showTitle[0];
+    }
+    else {
+      $showTitle = 0;
+    }
 
     drupal_add_js(array('visualizationEntityTables' => array('resource' => $resource)), 'setting');
     drupal_add_js(array('visualizationEntityTables' => array('showTitle'=> $showTitle)), 'setting');
