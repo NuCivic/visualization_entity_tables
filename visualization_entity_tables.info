@@ -7,7 +7,6 @@ dependencies[] = features
 dependencies[] = file
 dependencies[] = jquery_update
 dependencies[] = list
-dependencies[] = ok_tagging
 dependencies[] = recline
 dependencies[] = text
 dependencies[] = uuidreference
