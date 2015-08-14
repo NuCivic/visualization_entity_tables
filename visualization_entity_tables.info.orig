@@ -7,7 +7,10 @@ dependencies[] = features
 dependencies[] = file
 dependencies[] = jquery_update
 dependencies[] = list
+<<<<<<< HEAD
+=======
 dependencies[] = ok_tagging
+>>>>>>> master
 dependencies[] = recline
 dependencies[] = text
 dependencies[] = uuidreference
@@ -15,10 +18,13 @@ dependencies[] = visualization_entity
 dependencies[] = visualization_entity_recline_field_reference
 features[eck_bundle][] = visualization_ve_table
 features[features_api][] = api:2
-features[field_base][] = field_ve_table_resize
+<<<<<<< HEAD
 features[field_base][] = field_show_title
 features[field_base][] = field_ve_table_description
 features[field_base][] = field_ve_table_uuid_resource
+=======
+features[field_base][] = field_ve_table_resize
+>>>>>>> master
 features[field_instance][] = visualization-ve_table-field_description
 features[field_instance][] = visualization-ve_table-field_show_title
 features[field_instance][] = visualization-ve_table-field_uuid_resource
