@@ -19,7 +19,7 @@
       }
       dataset = new recline.Model.Dataset(source);
       dataset.fetch().done(function() {
-        console.log(dataset);
+        // console.log(dataset);
       });
 
       var grid = new recline.View.SlickGrid({
