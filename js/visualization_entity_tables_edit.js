@@ -2,8 +2,11 @@
 
   $(document).on('ready', function(){
 
-    var settings = JSON.parse($('#edit-field-ve-settings-und-0-value').val());
-    console.log(settings);
+    try {
+      var settings = JSON.parse($('#edit-field-ve-settings-und-0-value').val());
+    } catch (e) {
+      var settings = {};
+    }
 
     var $resourceField = $('#edit-field-uuid-resource-und-0-target-uuid');
     var $resizeField = $('#edit-field-ve-table-resize-und');
