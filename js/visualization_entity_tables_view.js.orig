@@ -4,8 +4,7 @@
       var title;
       var $body;
 
-      var $container = $('#ve-table');
-
+<<<<<<< HEAD
       if ($('#iframe-shell').length) { 
         $body = $(document.body);
         $body.removeClass('admin-menu');
@@ -14,6 +13,8 @@
           $body.prepend('<h2 class="veTitle">' + title + '</h2>');
         }
       }
+=======
+      var $container = $('#ve-table');
 
       // Column resizing based on content width
       // Based on https://github.com/naresh-n/slickgrid-column-data-autosize
@@ -106,6 +107,7 @@
       // End of Column resizing code
 
       $('#iframe-shell h2 a').attr('href', '#');
+>>>>>>> master
 
       var source = {
         url: Drupal.settings.visualizationEntityTables.resource,
@@ -113,6 +115,11 @@
       }
       dataset = new recline.Model.Dataset(source);
       dataset.fetch().done(function() {
+<<<<<<< HEAD
+        // console.log(dataset);
+      });
+=======
+>>>>>>> master
 
         var grid = new recline.View.SlickGrid({
           model: dataset,

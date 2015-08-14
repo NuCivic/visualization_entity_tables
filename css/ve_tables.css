@@ -1,3 +1,7 @@
+.entity-visualization h1 {
+  display: none;
+}
+
 #ve-table {
   height: 100%;
 }
@@ -12,7 +16,16 @@
 }
 
 #iframe-shell h2 {
-  font-size: 20px;
+  display: none;
+}
+h2.veTitle {
+  font-size: 18px;
+  margin-top: 0px;
+  padding: 20px;
+  margin-bottom:0px;
+}
+#iframe-shell .region-content {
+  margin: 0px;
 }
 
 #iframe-shell a {
@@ -30,10 +43,6 @@
 body, html {
   height: 100% !important;
   padding-top: 0px;
-}
-
-html body.admin-menu {
-  margin-top: 0px  !important;
 }
 
 #iframe-shell .region-content {

@@ -51,8 +51,9 @@ function visualization_entity_tables_entity_view($entity, $type, $view_mode, $la
     $entity->content['#suffix'] = '<div id="ve-table"></div>';
     visualization_entity_tables_attach_libraries($entity->content);
     $wrapper = entity_metadata_wrapper('visualization', $entity);
-    $settings = json_decode($wrapper->field_ve_settings->value());
-    $resource = $settings->source;
+<<<<<<< HEAD
+    $resource = json_decode($wrapper->field_ve_settings->value());
+    $resource = $resource->source;
     // Get value of Show title field.
     $title_wrapper = entity_metadata_wrapper('visualization', $entity);
     $showTitle = $title_wrapper->field_show_title->raw();
@@ -63,8 +64,13 @@ function visualization_entity_tables_entity_view($entity, $type, $view_mode, $la
       $showTitle = 0;
     }
 
-    drupal_add_js(array('visualizationEntityTables' => array('resource' => $settings->source, 'resize' => $settings->resize)), 'setting');
+    drupal_add_js(array('visualizationEntityTables' => array('resource' => $resource)), 'setting');
     drupal_add_js(array('visualizationEntityTables' => array('showTitle'=> $showTitle)), 'setting');
+=======
+    $settings = json_decode($wrapper->field_ve_settings->value());
+
+    drupal_add_js(array('visualizationEntityTables' => array('resource' => $settings->source, 'resize' => $settings->resize)), 'setting');
+>>>>>>> master
     drupal_add_js(drupal_get_path('module', 'visualization_entity_tables') . '/js/visualization_entity_tables_view.js', array('weight' => 101));
   }
 }
