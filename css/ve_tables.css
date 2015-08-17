@@ -8,10 +8,16 @@
 
 #iframe-shell #ve-table {
   height: 100%;
+  width: 100%;
+  overflow: scroll !important;
+}
+
+.slick-viewport {
+  overflow-x: hidden !important;
 }
 
 #iframe-shell {
-  overflow: auto;
+  overflow: hidden;
   height: 100%;
 }
 

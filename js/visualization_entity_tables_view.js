@@ -2,17 +2,29 @@
   Drupal.behaviors.VisualizationEntityTablesView = {
     attach: function(context) {
       var title;
-      var $body;
+      var $body = $(document.body);
 
       var $container = $('#ve-table');
 
-      if ($('#iframe-shell').length) { 
-        $body = $(document.body);
+      if ($('#iframe-shell').length) {
         $body.removeClass('admin-menu');
         if (Drupal.settings.visualizationEntityTables.showTitle) {
           title = $('#iframe-shell').find('h2 a').html();
           $body.prepend('<h2 class="veTitle">' + title + '</h2>');
         }
+      }
+
+      function tableResize() {
+        var $title = $body.find('h2.veTitle');
+        console.log($title);
+        var height = $title.length > 0
+          ? $(window).height() - $body.find('h2.veTitle').outerHeight(true)
+          : $(window).height();
+        $('#ve-table').height(height);
+        // Adjust width to ensure visibility of horizontal scrollbar
+        var tableWidth = $('.grid-canvas').outerWidth();
+        $('.slick-viewport').width(tableWidth);
+        $('.slick-header').width(tableWidth);
       }
 
       // Column resizing based on content width
@@ -132,6 +144,9 @@
         if (Drupal.settings.visualizationEntityTables.resize) {
           resizeAllColumns(grid.grid);
         }
+
+        // Adjust table size to fit iframe
+        tableResize();
 
       });
     }
