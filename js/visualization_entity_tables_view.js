@@ -146,7 +146,9 @@
         }
 
         // Adjust table size to fit iframe
-        tableResize();
+        if ($('#iframe-shell').length) {
+          tableResize();
+        }
 
       });
     }

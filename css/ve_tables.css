@@ -12,7 +12,7 @@
   overflow: scroll !important;
 }
 
-.slick-viewport {
+#iframe-shell .slick-viewport {
   overflow-x: hidden !important;
 }
 
