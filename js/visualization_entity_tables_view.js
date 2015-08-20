@@ -124,6 +124,10 @@
         backend: 'csv',
       }
       dataset = new recline.Model.Dataset(source);
+
+      // Remove limitation of 100 rows. There is no 'unlimited' setting.
+      dataset.queryState.attributes.size = 10000000;
+
       dataset.fetch().done(function() {
 
         var grid = new recline.View.SlickGrid({
