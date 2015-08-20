@@ -58,3 +58,12 @@ body, html {
 .field-name-field-ve-settings{
   display: none;
 }
+
+#ve-table .slick-viewport .slick-cell {
+  color: #4D4D4D;
+  font-size: 16px;
+}
+
+#ve-table .slick-column-name {
+  font-size: 16px;
+}
