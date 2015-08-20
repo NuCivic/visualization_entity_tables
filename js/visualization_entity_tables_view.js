@@ -14,17 +14,13 @@
         }
       }
 
-      function tableResize() {
+      function tableVerticalResize() {
         var $title = $body.find('h2.veTitle');
         console.log($title);
         var height = $title.length > 0
           ? $(window).height() - $body.find('h2.veTitle').outerHeight(true)
           : $(window).height();
-        $('#ve-table').height(height);
-        // Adjust width to ensure visibility of horizontal scrollbar
-        var tableWidth = $('.grid-canvas').outerWidth();
-        $('.slick-viewport').width(tableWidth);
-        $('.slick-header').width(tableWidth);
+        $('#iframe-shell').height(height);
       }
 
       // Column resizing based on content width
@@ -41,7 +37,14 @@
           allColumns[colIndex].width = autoSizeWidth;
         });
         grid.setColumns(allColumns);
-        grid.onColumnsResized.notify({grid: grid});
+
+        // Adjust width to ensure visibility of horizontal scrollbar in iframe
+        if ($('#iframe-shell').length) {
+          var tableWidth = $('.grid-canvas').outerWidth();
+          $('#ve-table').width(tableWidth);
+        }
+
+        grid.setColumns(allColumns);
 
       }
 
@@ -151,7 +154,7 @@
 
         // Adjust table size to fit iframe
         if ($('#iframe-shell').length) {
-          tableResize();
+          tableVerticalResize();
         }
 
       });

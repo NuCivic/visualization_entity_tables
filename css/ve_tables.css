@@ -2,14 +2,8 @@
   display: none;
 }
 
-#ve-table {
-  height: 100%;
-}
-
 #iframe-shell #ve-table {
-  height: 100%;
   width: 100%;
-  overflow: scroll !important;
 }
 
 #iframe-shell .slick-viewport {
@@ -17,7 +11,7 @@
 }
 
 #iframe-shell {
-  overflow: hidden;
+  overflow: scroll;
   height: 100%;
 }
 
