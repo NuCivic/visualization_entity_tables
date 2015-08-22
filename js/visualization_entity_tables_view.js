@@ -4,6 +4,9 @@
       var title;
       var $body = $(document.body);
 
+      // Add wrapper to limit viewport and show scrollbars.
+      $('#ve-table').wrap( "<div class='ve-table-wrapper'></div>" );
+
       var $container = $('#ve-table');
 
       if ($('#iframe-shell').length) {
@@ -20,7 +23,7 @@
         var height = $title.length > 0
           ? $(window).height() - $body.find('h2.veTitle').outerHeight(true)
           : $(window).height();
-        $('#iframe-shell').height(height);
+        $('#iframe-shell .ve-table-wrapper').height(height);
       }
 
       // Column resizing based on content width
@@ -39,10 +42,10 @@
         grid.setColumns(allColumns);
 
         // Adjust width to ensure visibility of horizontal scrollbar in iframe
-        if ($('#iframe-shell').length) {
+        //if ($('#iframe-shell').length) {
           var tableWidth = $('.grid-canvas').outerWidth();
           $('#ve-table').width(tableWidth);
-        }
+        //}
 
         grid.setColumns(allColumns);
 
@@ -152,10 +155,10 @@
           resizeAllColumns(grid.grid);
         }
 
-        // Adjust table size to fit iframe
-        if ($('#iframe-shell').length) {
+        // Adjust table size.
+        //if ($('#iframe-shell').length) {
           tableVerticalResize();
-        }
+        //}
 
       });
     }
