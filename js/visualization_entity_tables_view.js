@@ -42,10 +42,8 @@
         grid.setColumns(allColumns);
 
         // Adjust width to ensure visibility of horizontal scrollbar in iframe
-        //if ($('#iframe-shell').length) {
-          var tableWidth = $('.grid-canvas').outerWidth();
-          $('#ve-table').width(tableWidth);
-        //}
+        var tableWidth = $('.grid-canvas').outerWidth();
+        $('#ve-table').width(tableWidth);
 
         grid.setColumns(allColumns);
 
@@ -156,9 +154,7 @@
         }
 
         // Adjust table size.
-        //if ($('#iframe-shell').length) {
-          tableVerticalResize();
-        //}
+        tableVerticalResize();
 
       });
     }

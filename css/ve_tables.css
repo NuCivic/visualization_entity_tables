@@ -53,21 +53,6 @@ body, html {
 
 /* Show vertical and horizontal scrollbars. */
 
-/*
-#iframe-shell {
-    overflow: scroll;
-    height: 100%;
-}
-
-#iframe-shell #ve-table {
-    width: 100%;
-}
-
-#iframe-shell .slick-viewport {
-    overflow-x: hidden !important;
-}
-*/
-
 .ve-table-wrapper {
     height: 500px;
     width: 100%;
