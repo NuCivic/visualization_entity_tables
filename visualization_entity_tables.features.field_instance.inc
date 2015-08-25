@@ -55,7 +55,7 @@ function visualization_entity_tables_field_default_field_instances() {
     'bundle' => 've_table',
     'default_value' => array(
       0 => array(
-        'value' => 0,
+        'value' => 1,
       ),
     ),
     'deleted' => 0,
