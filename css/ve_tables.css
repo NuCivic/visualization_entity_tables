@@ -69,3 +69,9 @@ body, html {
 .ve-table-wrapper #ve-table .slick-header {
     overflow: visible !important;
 }
+
+/* Throbber element */
+#ve-loading {
+  text-align: center;
+  margin: 15px 0;
+}

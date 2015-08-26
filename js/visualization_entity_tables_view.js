@@ -9,6 +9,8 @@
 
       var $container = $('#ve-table');
 
+      $container.append('<p id="ve-loading">Loading…</p>');
+
       if ($('#iframe-shell').length) {
         $body.removeClass('admin-menu');
         if (Drupal.settings.visualizationEntityTables.showTitle) {
@@ -155,6 +157,8 @@
 
         // Adjust table size.
         tableVerticalResize();
+
+        $('#ve-loading').remove();
 
       });
     }
