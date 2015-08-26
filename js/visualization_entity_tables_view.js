@@ -6,7 +6,7 @@
 
       var $container = $('#ve-table');
 
-      $container.append('<p class="ve-loading">Loading…</p>');
+      $container.append('<p id="ve-loading">Loading…</p>');
 
       if ($('#iframe-shell').length) {
         $body.removeClass('admin-menu');
@@ -156,7 +156,7 @@
           tableResize();
         }
 
-        $('.ve-loading').remove();
+        $('#ve-loading').remove();
 
       });
     }
