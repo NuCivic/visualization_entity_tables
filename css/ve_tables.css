@@ -56,7 +56,7 @@ body, html {
 .ve-table-wrapper {
     height: 500px;
     width: 100%;
-    overflow: scroll;
+    overflow: auto;
 }
 
 #iframe-shell {
