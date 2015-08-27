@@ -70,8 +70,22 @@ body, html {
     overflow: visible !important;
 }
 
+/* Pager */
+.ve-table-wrapper .recline-pager {
+  float: none;
+  margin: 0 0 15px 0;
+}
+
+.ve-table-wrapper .recline-pager .pagination {
+  margin: 0;
+}
+
 /* Throbber element */
 #ve-loading {
   text-align: center;
   margin: 15px 0;
+}
+
+#eck-entity-form-edit-visualization-ve-table .field-hidden {
+  display: none;
 }

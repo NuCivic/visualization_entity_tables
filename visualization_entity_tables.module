@@ -65,6 +65,8 @@ function visualization_entity_tables_entity_view($entity, $type, $view_mode, $la
 
     drupal_add_js(array('visualizationEntityTables' => array('resource' => $settings->source, 'resize' => $settings->resize)), 'setting');
     drupal_add_js(array('visualizationEntityTables' => array('showTitle'=> $showTitle)), 'setting');
+    drupal_add_js(array('visualizationEntityTables' => array('pager'=> $settings->pager)), 'setting');
+    drupal_add_js(array('visualizationEntityTables' => array('numRecords'=> $settings->numRecords)), 'setting');
     drupal_add_js(drupal_get_path('module', 'visualization_entity_tables') . '/js/visualization_entity_tables_view.js', array('weight' => 101));
   }
 }
