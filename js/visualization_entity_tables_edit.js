@@ -17,6 +17,9 @@
 
     if (!$numRecordsField.val()) {
       $numRecordsField.val('100');
+      settings.numRecords = '100';
+      $settingsField.val(JSON.stringify(settings));
+
     }
 
     if (!$pagerField.prop('checked')) {
