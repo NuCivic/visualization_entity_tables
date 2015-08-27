@@ -132,7 +132,7 @@
       dataset = new recline.Model.Dataset(source);
 
       if (Drupal.settings.visualizationEntityTables.pager) {
-        dataset.queryState.attributes.size = Drupal.settings.visualizationEntityTables.numRecords;
+        dataset.queryState.attributes.size = parseInt(Drupal.settings.visualizationEntityTables.numRecords, 10);
       } else {
         // Remove limitation of 100 rows. There is no 'unlimited' setting.
         dataset.queryState.attributes.size = 10000000;
@@ -151,19 +151,25 @@
           }
         });
 
+        grid.visible = true;
+        grid.render();
+
+        var pager;
         if (Drupal.settings.visualizationEntityTables.pager) {
-          var pager = new recline.View.Pager({
+          pager = new recline.View.Pager({
             model: dataset,
           });
           $('.ve-table-wrapper').prepend(pager.el);
         }
 
-        grid.visible = true;
-        grid.render();
-
         // Resize columns to fit content
         if (Drupal.settings.visualizationEntityTables.resize) {
           resizeAllColumns(grid.grid);
+          dataset.queryState.on('change', function() {
+            setTimeout(function() {
+              resizeAllColumns(grid.grid);
+            }, 0);
+          })
         }
 
         // Adjust table size.
