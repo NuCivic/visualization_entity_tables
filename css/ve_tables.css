@@ -63,17 +63,18 @@ body, html {
     overflow: hidden;
 }
 
-.ve-table-wrapper #ve-table,
-.ve-table-wrapper #ve-table .grid-canvas,
-.ve-table-wrapper #ve-table .slick-viewport,
-.ve-table-wrapper #ve-table .slick-header {
-    overflow: visible !important;
+.ve-table-wrapper #ve-table .slick-viewport {
+  overflow-x: hidden !important;
 }
 
 /* Pager */
 .ve-table-wrapper .recline-pager {
   float: none;
   margin: 0 0 15px 0;
+}
+
+#iframe-shell .ve-table-wrapper .recline-pager {
+  margin: 0 0 15px 20px;
 }
 
 .ve-table-wrapper .recline-pager .pagination {
