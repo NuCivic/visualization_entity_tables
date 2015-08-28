@@ -155,10 +155,11 @@
         grid.render();
 
         var pager;
-        if (Drupal.settings.visualizationEntityTables.pager) {
+        if (Drupal.settings.visualizationEntityTables.pager &&
+             (dataset.recordCount > parseInt(Drupal.settings.visualizationEntityTables.numRecords, 10))) {
           var recordCountEl = '<div class="ve-recordcount">' + dataset.recordCount + ' Records</div>';
           $('.ve-table-wrapper').prepend(recordCountEl);
-          
+
           pager = new recline.View.Pager({
             model: dataset,
           });
