@@ -69,12 +69,19 @@ body, html {
 
 /* Pager */
 .ve-table-wrapper .recline-pager {
+  display: inline-block;
   float: none;
   margin: 0 0 15px 0;
 }
 
 #iframe-shell .ve-table-wrapper .recline-pager {
   margin: 0 0 15px 20px;
+}
+
+/* Record count */
+.ve-recordcount {
+  display: inline-block;
+  margin-left: 20px;
 }
 
 .ve-table-wrapper .recline-pager .pagination {

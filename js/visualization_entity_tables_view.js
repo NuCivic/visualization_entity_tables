@@ -156,6 +156,9 @@
 
         var pager;
         if (Drupal.settings.visualizationEntityTables.pager) {
+          var recordCountEl = '<div class="ve-recordcount">' + dataset.recordCount + ' Records</div>';
+          $('.ve-table-wrapper').prepend(recordCountEl);
+          
           pager = new recline.View.Pager({
             model: dataset,
           });
