@@ -222,7 +222,7 @@ function visualization_entity_tables_field_default_field_instances() {
       ),
     ),
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Pager will be shown only when the total number of records is larger than the page size.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -301,6 +301,7 @@ function visualization_entity_tables_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Description');
   t('Number of records to show per page');
+  t('Pager will be shown only when the total number of records is larger than the page size.');
   t('Resize columns to fit data');
   t('Resource');
   t('Settings');
