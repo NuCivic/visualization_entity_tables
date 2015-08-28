@@ -25,6 +25,9 @@
         var height = $title.length > 0
           ? $(window).height() - $body.find('h2.veTitle').outerHeight(true)
           : $(window).height();
+        if (Drupal.settings.visualizationEntityTables.pager) {
+          height -= $('.pager-container').outerHeight(true);
+        }
         $('#iframe-shell .ve-table-wrapper').height(height);
       }
 
@@ -154,16 +157,27 @@
         grid.visible = true;
         grid.render();
 
+        // Add pager, if enabled and recordCount > page size
         var pager;
         if (Drupal.settings.visualizationEntityTables.pager &&
              (dataset.recordCount > parseInt(Drupal.settings.visualizationEntityTables.numRecords, 10))) {
+          var frameActive = ($('#iframe-shell').length != 0);
           var recordCountEl = '<div class="ve-recordcount">' + dataset.recordCount + ' Records</div>';
-          $('.ve-table-wrapper').prepend(recordCountEl);
 
           pager = new recline.View.Pager({
             model: dataset,
           });
-          $('.ve-table-wrapper').prepend(pager.el);
+
+          var $pagerContainer = $('<div class="pager-container"></div>');
+          $pagerContainer.append(pager.el);
+          $pagerContainer.append(recordCountEl);
+
+          if (frameActive) {
+            $('.ve-table-wrapper').parent().prepend($pagerContainer);
+          } else {
+
+            $('.visualization-embed').after($pagerContainer);
+          }
         }
 
         // Resize columns to fit content

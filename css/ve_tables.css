@@ -68,23 +68,28 @@ body, html {
 }
 
 /* Pager */
-.ve-table-wrapper .recline-pager {
-  display: inline-block;
-  float: none;
-  margin: 0 0 15px 0;
+.pager-container {
+  margin-bottom: 15px;
 }
 
-#iframe-shell .ve-table-wrapper .recline-pager {
-  margin: 0 0 15px 20px;
+#iframe-shell .pager-container {
+  margin-left: 20px;
+}
+
+.pager-container .recline-pager {
+  display: inline-block;
+  float: none;
+  margin-left: 0;
 }
 
 /* Record count */
 .ve-recordcount {
   display: inline-block;
   margin-left: 20px;
+  line-height: 35px;
 }
 
-.ve-table-wrapper .recline-pager .pagination {
+.recline-pager .pagination {
   margin: 0;
 }
 
