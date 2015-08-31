@@ -9,7 +9,7 @@
 
       var $container = $('#ve-table');
 
-      $container.append('<p id="ve-loading">Loading…</p>');
+      $container.append('<div class="alert alert-info loader">Loading <span class="spin"></span></div>');
 
       if ($('#iframe-shell').length) {
         $body.removeClass('admin-menu');
@@ -193,7 +193,7 @@
         // Adjust table size.
         tableVerticalResize();
 
-        $('#ve-loading').remove();
+        $container.find('.loader').remove();
 
       });
     }
