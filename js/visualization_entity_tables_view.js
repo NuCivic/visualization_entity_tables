@@ -169,8 +169,8 @@
           });
 
           var $pagerContainer = $('<div class="pager-container"></div>');
-          $pagerContainer.append(pager.el);
           $pagerContainer.append(recordCountEl);
+          $pagerContainer.append(pager.el);
 
           if (frameActive) {
             $('.ve-table-wrapper').parent().prepend($pagerContainer);
