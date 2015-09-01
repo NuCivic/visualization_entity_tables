@@ -114,6 +114,11 @@ h2.veTitle {
   border-radius: 0px;
   border-top: none;
   opacity: .8;
+  top: 400px;
+}
+
+#iframe-shell .loader{
+  top:10px;
 }
 
 .page-visualization .loader .spin{
@@ -129,3 +134,6 @@ h2.veTitle {
   font-size: 12px;
 }
 
+.visualization-ve-table {
+  position: relative;
+}

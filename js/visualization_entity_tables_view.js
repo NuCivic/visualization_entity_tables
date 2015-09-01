@@ -8,8 +8,8 @@
       $('#ve-table').wrap( "<div class='ve-table-wrapper'></div>" );
 
       var $container = $('#ve-table');
-
-      $container.append('<div class="alert alert-info loader">Loading <span class="spin"></span></div>');
+      var $vizWrapper = $('.visualization-ve-table');
+      $vizWrapper.append('<div class="alert alert-info loader">Loading <span class="spin"></span></div>');
 
       if ($('#iframe-shell').length) {
         $body.removeClass('admin-menu');
@@ -21,7 +21,6 @@
 
       function tableVerticalResize() {
         var $title = $body.find('h2.veTitle');
-        console.log($title);
         var height = $title.length > 0
           ? $(window).height() - $body.find('h2.veTitle').outerHeight(true)
           : $(window).height();
@@ -157,6 +156,7 @@
         grid.visible = true;
         grid.render();
 
+
         // Add pager, if enabled and recordCount > page size
         var pager;
         if (Drupal.settings.visualizationEntityTables.pager &&
@@ -171,6 +171,15 @@
           var $pagerContainer = $('<div class="pager-container"></div>');
           $pagerContainer.append(recordCountEl);
           $pagerContainer.append(pager.el);
+
+          grid.listenTo(dataset, 'query:start', function() {
+            $vizWrapper.find('.loader').show();
+          });
+
+          grid.listenTo(dataset, 'query:done', function() {
+            console.log('done');
+            $vizWrapper.find('.loader').fadeOut();
+          });
 
           if (frameActive) {
             $('.ve-table-wrapper').parent().prepend($pagerContainer);
@@ -193,7 +202,7 @@
         // Adjust table size.
         tableVerticalResize();
 
-        $container.find('.loader').remove();
+        $vizWrapper.find('.loader').hide();
 
       });
     }
