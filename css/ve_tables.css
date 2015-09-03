@@ -7,8 +7,10 @@ body, html {
 }
 h2.veTitle {
   font-size: 18px;
-  margin: 15px 20px;
-  padding: 0;
+  /*margin: 15px 20px;*/
+  /*padding: 0;*/
+  margin: 0px;
+  padding: 15px 20px;
 }
 #iframe-shell {
   overflow: hidden;
@@ -44,14 +46,17 @@ h2.veTitle {
 /* Show vertical and horizontal scrollbars. */
 
 .ve-table-wrapper {
-  height: auto;
+  height: 500px;
   width: 100%;
   overflow: auto;
 }
 
-.ve-table-wrapper #ve-table .slick-viewport {
-  overflow-x: hidden !important;
-}
+.ve-table-wrapper #ve-table,
+.ve-table-wrapper #ve-table .grid-canvas,
+.ve-table-wrapper #ve-table .slick-viewport,
+.ve-table-wrapper #ve-table .slick-header {
+    overflow: visible !important;
+ }
 
 /* Pager */
 .pager-container {
