@@ -93,6 +93,11 @@ h2.veTitle {
     display: block;
     margin:0 0 10px;
   }
+  /* Keep the record count inline in the iframe */
+  #iframe-shell .ve-recordcount {
+    display: inline-block;
+    margin:0 20px 10px 0;
+  }
 }
 
 .recline-pager .pagination {
