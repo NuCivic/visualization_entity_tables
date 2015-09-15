@@ -7,8 +7,10 @@ body, html {
 }
 h2.veTitle {
   font-size: 18px;
-  margin: 15px 20px;
-  padding: 0;
+  /*margin: 15px 20px;*/
+  /*padding: 0;*/
+  margin: 0px;
+  padding: 15px 20px;
 }
 #iframe-shell {
   overflow: hidden;
@@ -49,9 +51,12 @@ h2.veTitle {
   overflow: auto;
 }
 
-.ve-table-wrapper #ve-table .slick-viewport {
-  overflow-x: hidden !important;
-}
+.ve-table-wrapper #ve-table,
+.ve-table-wrapper #ve-table .grid-canvas,
+.ve-table-wrapper #ve-table .slick-viewport,
+.ve-table-wrapper #ve-table .slick-header {
+    overflow: visible !important;
+ }
 
 /* Pager */
 .pager-container {
@@ -87,6 +92,11 @@ h2.veTitle {
   .ve-recordcount {
     display: block;
     margin:0 0 10px;
+  }
+  /* Keep the record count inline in the iframe */
+  #iframe-shell .ve-recordcount {
+    display: inline-block;
+    margin:0 20px 10px 0;
   }
 }
 
