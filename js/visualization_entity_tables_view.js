@@ -1,33 +1,135 @@
 (function($) {
   Drupal.behaviors.VisualizationEntityTablesView = {
     attach: function(context) {
-      var title;
+      var MAX_ROWS_NUMBER = 100000000;
+      var settings = Drupal.settings.visualizationEntityTables;
+      var datastore = settings.datastore;
+      var fileType = settings.fileType;
       var $body = $(document.body);
+      var $container = $('#ve-table');
+      var $iframe_shell = $('#iframe-shell');
+      var $vizWrapper = $('.visualization-ve-table');
+      var pager;
+      var title;
+      var source;
 
       // Add wrapper to limit viewport and show scrollbars.
-      $('#ve-table').wrap( "<div class='ve-table-wrapper'></div>" );
-
-      var $container = $('#ve-table');
-      var $vizWrapper = $('.visualization-ve-table');
+      $container.wrap( "<div class='ve-table-wrapper'></div>" );
       $vizWrapper.append('<div class="alert alert-info loader">Loading <span class="spin"></span></div>');
 
-      if ($('#iframe-shell').length) {
+      if ($iframe_shell.length) {
         $body.removeClass('admin-menu');
-        if (Drupal.settings.visualizationEntityTables.showTitle) {
-          title = $('#iframe-shell').find('h2 a').html();
+        if (settings.showTitle) {
+          title = $iframe_shell.find('h2 a').html();
           $body.prepend('<h2 class="veTitle">' + title + '</h2>');
         }
       }
 
+      $iframe_shell.find('h2 a').attr('href', '#');
+
+      // If we have this resource into the datastore then
+      // we use it.
+      if(datastore){
+        var drupal_base_path = Drupal.settings.basePath;
+        var DKAN_API = drupal_base_path + 'api/action/datastore/search.json';
+        var resource_uuid = settings.resource_uuid;
+        source = {
+          endpoint: window.location.origin + drupal_base_path + '/api',
+          url: window.location.origin + DKAN_API + '?resource_id=' + resource_uuid,
+          id: resource_uuid,
+          backend: 'ckan'
+        };
+
+      // if not then if it's a csv file we try to parse it.
+      } else if(fileType == 'text/csv' || fileType == 'csv') {
+        source = {
+          url: settings.resource,
+          backend: 'csv'
+        };
+
+      // otherwise we do nothing.
+      } else {
+        console.warn('Preview files other than csv is not currently supported');
+        return false;
+      }
+
+      dataset = new recline.Model.Dataset(source);
+      dataset.queryState.attributes.size = (settings.pager)
+        ? parseInt(settings.numRecords, 10)
+        : MAX_ROWS_NUMBER;
+
+      dataset.fetch().done(function() {
+        var grid = new recline.View.SlickGrid({
+          model: dataset,
+          el: $container,
+          state: {
+            gridOptions: {
+              autoHeight: true,
+              forceFitColumns: !settings.resize,
+            }
+          }
+        });
+
+        grid.visible = true;
+        grid.render();
+
+        // Add pager, if enabled and recordCount > page size
+        if (settings.pager && (dataset.recordCount > parseInt(settings.numRecords, 10))) {
+          var frameActive = ($iframe_shell.length != 0);
+          var recordCountEl = '<div class="ve-recordcount">' + dataset.recordCount + ' Records</div>';
+
+          pager = new recline.View.Pager({
+            model: dataset,
+          });
+
+          var $pagerContainer = $('<div class="pager-container"></div>');
+          $pagerContainer.append(recordCountEl);
+          $pagerContainer.append(pager.el);
+
+          grid.listenTo(dataset, 'query:start', function() {
+            $vizWrapper.find('.loader').show();
+          });
+
+          grid.listenTo(dataset, 'query:done', function() {
+            console.log('done');
+            $vizWrapper.find('.loader').fadeOut();
+          });
+
+          if (frameActive) {
+            $('.ve-table-wrapper').parent().prepend($pagerContainer);
+          } else {
+            $('.visualization-embed').after($pagerContainer);
+          }
+        }
+
+        // Resize columns to fit content
+        if (settings.resize) {
+          resizeAllColumns(grid.grid);
+          dataset.queryState.on('change', function() {
+            setTimeout(function() {
+              resizeAllColumns(grid.grid);
+            }, 0);
+          })
+        }
+
+        // Adjust table size.
+        tableVerticalResize();
+        $vizWrapper.find('.loader').hide();
+      });
+
+
+      //==========================================
+      // Functions
+      // -----------------------------------------
       function tableVerticalResize() {
         var $title = $body.find('h2.veTitle');
         var height = $title.length > 0
           ? $(window).height() - $body.find('h2.veTitle').outerHeight(true)
           : $(window).height();
-        if (Drupal.settings.visualizationEntityTables.pager) {
+        if (settings.pager) {
           height -= $('.pager-container').outerHeight(true);
         }
-        $('#iframe-shell .ve-table-wrapper').height(height);
+        $iframe_shell.find('.ve-table-wrapper').height(height);
       }
 
       // Column resizing based on content width
@@ -48,9 +150,7 @@
         // Adjust width to ensure visibility of horizontal scrollbar in iframe
         var tableWidth = $('.grid-canvas').outerWidth();
         $('#ve-table').width(tableWidth);
-
         grid.setColumns(allColumns);
-
       }
 
       function getMaxColumnTextWidth(grid, columnDef, colIndex) {
@@ -123,88 +223,6 @@
         var metrics = context.measureText(text);
         return metrics.width;
       }
-      // End of Column resizing code
-
-      $('#iframe-shell h2 a').attr('href', '#');
-
-      var source = {
-        url: Drupal.settings.visualizationEntityTables.resource,
-        backend: 'csv',
-      }
-      dataset = new recline.Model.Dataset(source);
-
-      if (Drupal.settings.visualizationEntityTables.pager) {
-        dataset.queryState.attributes.size = parseInt(Drupal.settings.visualizationEntityTables.numRecords, 10);
-      } else {
-        // Remove limitation of 100 rows. There is no 'unlimited' setting.
-        dataset.queryState.attributes.size = 10000000;
-      }
-
-      dataset.fetch().done(function() {
-
-        var grid = new recline.View.SlickGrid({
-          model: dataset,
-          el: $container,
-          state: {
-            gridOptions: {
-              autoHeight: true,
-              forceFitColumns: !Drupal.settings.visualizationEntityTables.resize,
-            }
-          }
-        });
-
-        grid.visible = true;
-        grid.render();
-
-
-        // Add pager, if enabled and recordCount > page size
-        var pager;
-        if (Drupal.settings.visualizationEntityTables.pager &&
-             (dataset.recordCount > parseInt(Drupal.settings.visualizationEntityTables.numRecords, 10))) {
-          var frameActive = ($('#iframe-shell').length != 0);
-          var recordCountEl = '<div class="ve-recordcount">' + dataset.recordCount + ' Records</div>';
-
-          pager = new recline.View.Pager({
-            model: dataset,
-          });
-
-          var $pagerContainer = $('<div class="pager-container"></div>');
-          $pagerContainer.append(recordCountEl);
-          $pagerContainer.append(pager.el);
-
-          grid.listenTo(dataset, 'query:start', function() {
-            $vizWrapper.find('.loader').show();
-          });
-
-          grid.listenTo(dataset, 'query:done', function() {
-            console.log('done');
-            $vizWrapper.find('.loader').fadeOut();
-          });
-
-          if (frameActive) {
-            $('.ve-table-wrapper').parent().prepend($pagerContainer);
-          } else {
-
-            $('.visualization-embed').after($pagerContainer);
-          }
-        }
-
-        // Resize columns to fit content
-        if (Drupal.settings.visualizationEntityTables.resize) {
-          resizeAllColumns(grid.grid);
-          dataset.queryState.on('change', function() {
-            setTimeout(function() {
-              resizeAllColumns(grid.grid);
-            }, 0);
-          })
-        }
-
-        // Adjust table size.
-        tableVerticalResize();
-
-        $vizWrapper.find('.loader').hide();
-
-      });
     }
   };
 })(jQuery);
