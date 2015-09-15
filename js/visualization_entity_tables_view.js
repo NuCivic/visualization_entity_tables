@@ -105,11 +105,9 @@
         // Resize columns to fit content
         if (settings.resize) {
           resizeAllColumns(grid.grid);
-          dataset.queryState.on('change', function() {
-            setTimeout(function() {
-              resizeAllColumns(grid.grid);
-            }, 0);
-          })
+          grid.listenTo(dataset, 'query:done', function() {
+            resizeAllColumns(grid.grid);
+          });
         }
 
         // Adjust table size.
