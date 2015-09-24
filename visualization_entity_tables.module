@@ -65,11 +65,13 @@ function visualization_entity_tables_entity_view($entity, $type, $view_mode, $la
     $fileType = $fileType->filemime;
     $nid = $nids[$resource_uuid];
     $datastore = $table = FALSE;
-    if (module_exists('dkan_datastore_api') && module_exists('feeds_flatstore_processor') && function_exists('dkan_datastore_api_get_feeds_source')) {
-      $source_id = dkan_datastore_api_get_feeds_source($nid);
-      if ($table = feeds_flatstore_processor_table_name($source_id, $nid)) {
-        if (db_table_exists($table)) {
-          $datastore = !!$table;
+    if($resource_wrapper->field_datastore_status->value() == 1) {
+      if (module_exists('dkan_datastore_api') && module_exists('feeds_flatstore_processor') && function_exists('dkan_datastore_api_get_feeds_source')) {
+        $source_id = dkan_datastore_api_get_feeds_source($nid);
+        if ($table = feeds_flatstore_processor_table_name($source_id, $nid)) {
+          if (db_table_exists($table)) {
+            $datastore = !!$table;
+          }
         }
       }
     }
